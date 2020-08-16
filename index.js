@@ -17,12 +17,12 @@ io.on('connection', (socket) => {
     }
     app.post('/placeOrder', (req, res) => {
         Order.create({...req.body, status: 'pending'})
-        .then((res) => {
-            Order.findById(res._id).populate({ path: 'customer', select: ['name', 'phone'] })
+        .then((data) => {
+            Order.findById(data._id).populate({ path: 'customer', select: ['name', 'phone'] })
             .then((order) => {
                 io.emit(`newOrder/${order.shop}`, order)
             })
-            Order.findById(res._id).populate({path: 'shop', select: ['name', 'phone']})
+            Order.findById(data._id).populate({path: 'shop', select: ['name', 'phone']})
             .then((order) => {
                 return res.status(201).json(order)
             })
