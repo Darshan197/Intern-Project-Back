@@ -15,19 +15,6 @@ io.on('connection', (socket) => {
     sendStatus = (s) => {
         socket.emit('status', s)
     }
-    app.post('/placeOrder', (req, res) => {
-        Order.create({...req.body, status: 'pending'})
-        .then((data) => {
-            Order.findById(data._id).populate({ path: 'customer', select: ['name', 'phone'] })
-            .then((order) => {
-                io.emit(`newOrder/${order.shop}`, order)
-            })
-            Order.findById(data._id).populate({path: 'shop', select: ['name', 'phone']})
-            .then((order) => {
-                return res.status(201).json(order)
-            })
-        })
-    })
     socket.on('placeOrder', (data) => {
         Order.create({...data, status: 'pending'})
         .then((res) => {
