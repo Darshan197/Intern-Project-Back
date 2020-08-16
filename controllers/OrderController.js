@@ -17,10 +17,10 @@ exports.getOrders = async (req, res) => {
         const customerId = req.query.customerId
         if(shopId) {
             if(status === 'pending') {
-                const orders = await Order.find({ shop: shopId, status: ['pending', 'outfordelivery', 'accepted', 'packed'] }).populate({ path: 'customer', select: ['name', 'phone'] })
+                const orders = await Order.find({ shop: shopId, status: ['pending', 'outfordelivery', 'accepted', 'packed'] }).populate({ path: 'customer', select: ['name', 'phone'] }).sort({date: 'desc'})
                 return res.status(200).json(orders)
             } else {
-                const orders = await Order.find({ shop: shopId }).populate({ path: 'customer', select: ['name', 'phone'] })
+                const orders = await Order.find({ shop: shopId }).populate({ path: 'customer', select: ['name', 'phone'] }).sort({date: 'desc'})
                 return res.status(200).json(orders)
             }
         } else if(customerId) {
