@@ -24,7 +24,7 @@ exports.getOrders = async (req, res) => {
                 return res.status(200).json(orders)
             }
         } else if(customerId) {
-            const orders = await Order.find({ customer: customerId }).populate({path: 'shop', select: ['name', 'phone', 'image']})
+            const orders = await Order.find({ customer: customerId }).populate({path: 'shop', select: ['name', 'phone', 'image']}).sort({date: 'desc'})
             return res.status(200).json(orders)
         }
     } catch (error) {
