@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const UserController = require("../controllers/UserController")
 const jwt = require('jsonwebtoken')
+const fs = require('fs')
 
 const verifyToken = (req, res, next) => {
     const bearer = req.headers['authorization']
@@ -15,6 +16,7 @@ const verifyToken = (req, res, next) => {
         return res.sendStatus(403)
     }
 }
+
 
 router.put('/:id', verifyToken, UserController.update)
 router.post('/addaddress/:id', UserController.addAddress)

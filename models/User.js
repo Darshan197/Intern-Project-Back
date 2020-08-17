@@ -24,6 +24,10 @@ const User = new mongoose.Schema({
     addresses: {
         type: Array, 
         default: []
+    },
+    image: {
+        type: String,
+        default: '/images/userlogo.png'
     }
 })
 
