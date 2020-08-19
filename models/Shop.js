@@ -18,7 +18,7 @@ const Shop = new mongoose.Schema({
     location: { type: String, required: true },
     type: { type: String, required: true },
     items: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Item', default: [] } ],
-    image: { type: String }
+    image: { type: String, default: '/images/store.png' }
 })
 
 module.exports = mongoose.model('Shop', Shop)

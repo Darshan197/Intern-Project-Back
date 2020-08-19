@@ -35,17 +35,11 @@ const Login = async (req, res) => {
 
 const AddItems = async (req, res) => {
     try {
-        const items = req.body.items
-        let its = items.map(async(i) => {
-            let item = await Item.findOne({ name: i.name })
-            if(!item) item = await Item.create(i)
-            return item._id
-        })
-        return Promise.all(its)
-        .then(async (data) => {
-            const shop = await Shop.findByIdAndUpdate(req.body.shop_id, { items: data }, { new: true })
-            return res.status(200).json(shop)
-        })
+        const sid = req.body.id
+        const items = await Item.find({category: 'Grocery'}).select('_id')
+        const its = items.map(i => i._id)
+        const shop = await Shop.findByIdAndUpdate(sid, {items: its}, { new: true })
+        return res.status(200).json(shop)
     } catch (error) {
         return res.status(500).json(error)
     }

@@ -18,7 +18,7 @@ const verifyToken = (req, res, next) => {
 router.post('/register', ShopController.Register)
 router.post('/login', ShopController.Login)
 router.post('/additems', ShopController.AddItems)
-router.get('/get', ShopController.getShops)
+router.get('/', ShopController.getShops)
 router.put('/:id', ShopController.update)
 router.get('/sep', ShopController.sep)
 
