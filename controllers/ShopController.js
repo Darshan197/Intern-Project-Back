@@ -9,7 +9,7 @@ const Register = async (req, res) => {
         const sh = await Shop.create({...req.body, password: hash})
         const items = await Item.find({category: sh.type}).select('_id')
         const its = items.map(i => i._id)
-        const shop = await Shop.findByIdAndUpdate(sid, {items: its}, { new: true })
+        const shop = await Shop.findByIdAndUpdate(sh._id, {items: its}, { new: true })
         return res.status(201).json(shop)
     } catch (error) {
         console.log(error)
