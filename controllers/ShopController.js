@@ -81,14 +81,8 @@ const update = async (req, res) => {
 
 const sep = async (req, res) => {
     try {
-        const shops = await Shop.find()
-        const sh = shops.map(async (s) => {
-            if(s.type === 'Vegetables/Fruits') {
-                const shop = await Shop.findByIdAndUpdate(s._id, { image: 'images/veges.png' }, { new: true })
-            }
-            return shop
-        })
-        return res.status(200).json(sh)
+        const items = await Item.find({ category: 'Vegetable/Fruit' })
+        return res.status(200).json(items)
     } catch (error) {
         return res.status(500).json(error)
     }
