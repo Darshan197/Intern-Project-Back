@@ -6,7 +6,10 @@ const jwt = require('jsonwebtoken')
 const Register = async (req, res) => {
     try {
         const hash = bcrypt.hashSync(req.body.password, 10)
-        const shop = await Shop.create({...req.body, password: hash})
+        const sh = await Shop.create({...req.body, password: hash})
+        const items = await Item.find({category: sh.type}).select('_id')
+        const its = items.map(i => i._id)
+        const shop = await Shop.findByIdAndUpdate(sid, {items: its}, { new: true })
         return res.status(201).json(shop)
     } catch (error) {
         console.log(error)
@@ -36,7 +39,8 @@ const Login = async (req, res) => {
 const AddItems = async (req, res) => {
     try {
         const sid = req.body.id
-        const items = await Item.find({category: 'Grocery'}).select('_id')
+        const sh = await Shop.findById(sid)
+        const items = await Item.find({category: sh.type}).select('_id')
         const its = items.map(i => i._id)
         const shop = await Shop.findByIdAndUpdate(sid, {items: its}, { new: true })
         return res.status(200).json(shop)
