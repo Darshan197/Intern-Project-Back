@@ -4,6 +4,11 @@
 ```
 npm install
 ```
+### Create .env File And Following
+```
+PORT=(Prefered)
+MONGO_URI=(You Can Get From MongoDB Atlas)
+```
 
 ### Compiles for development
 ```
